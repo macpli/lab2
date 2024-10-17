@@ -4,13 +4,20 @@ const router = express.Router();
 const products = [];
 // /admin/add-product => GET
 router.get('/add-product', (req, res, next) => {
-  res.sendFile(path.join(path.dirname(require.main.filename), 
-  'views', 'add-product.html'));
+  res.render('add-product', 
+    {pageTitle: 'Add Product',
+       path: '/admin/add-product',
+       formsCSS: true,
+       productCSS: true,
+       activeAddProduct: true
+      });
 });
 
 // /admin/add-product => POST
 router.post('/add-product', (req, res, next) => {
-  products.push({little: req.body.tittle})
+  const price =  Math.floor(Math.random() * 90) + 10;
+  const desc = `A very nice ` + req.body.title;
+  products.push({title: req.body.title, price: price, desc: desc});
   res.redirect('/');
 });
 
